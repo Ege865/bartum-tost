@@ -1,0 +1,49 @@
+---
+// Opening: two plates of a toast press close over the page, leave their grill marks, open again.
+// Plays once per session; skipped entirely under reduced motion (decided before first paint).
+---
+<div class="intro" aria-hidden="true" data-intro>
+  <div class="intro__plate intro__plate--top" data-plate="top"></div>
+  <div class="intro__plate intro__plate--bottom" data-plate="bottom"></div>
+  <div class="intro__seam" data-seam>
+    <span class="intro__word display" data-intro-word>Bartum Tost</span>
+  </div>
+</div>
+<script is:inline>
+  (function () {
+    var d = document.documentElement, seen = false;
+    try { seen = sessionStorage.getItem('bt-intro') === '1'; } catch (e) {}
+    if (!seen && !matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('intro-on');
+  })();
+</script>
+
+<style>
+  .intro { display: none; }
+  :global(html.intro-on) .intro {
+    display: block; position: fixed; inset: 0; z-index: 150; pointer-events: none;
+    /* Failsafe: if the script never runs, the press lifts by itself. */
+    animation: intro-failsafe 0s 4s forwards;
+  }
+  .intro__plate {
+    position: absolute; left: 0; right: 0; height: 50.5%;
+    background: var(--blue);
+  }
+  .intro__plate--top { top: 0; }
+  .intro__plate--bottom { bottom: 0; }
+  .intro__plate--top::after,
+  .intro__plate--bottom::before {
+    /* the hot edge of each plate */
+    content: ''; position: absolute; left: 0; right: 0; height: 3px; background: var(--amber);
+  }
+  .intro__plate--top::after { bottom: 0; }
+  .intro__plate--bottom::before { top: 0; }
+  .intro__seam {
+    position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden;
+  }
+  .intro__word {
+    color: var(--cream);
+    font-size: clamp(3rem, 14vw, 13rem);
+    white-space: nowrap;
+  }
+  @keyframes intro-failsafe { to { visibility: hidden; } }
+</style>

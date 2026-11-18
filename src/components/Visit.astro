@@ -1,0 +1,66 @@
+---
+// Visit: hours and contact over a full-bleed photograph of tea being poured.
+import { Picture } from 'astro:assets';
+import cay from '../assets/stock/cay-dokum.jpg';
+import { site } from '../data/site';
+---
+<section class="visit" id="iletisim" aria-labelledby="visit-title">
+  <div class="visit__bg">
+    <Picture src={cay} formats={['avif', 'webp']} widths={[768, 1280, 1920, 2400]} sizes="(max-width: 899px) 1400px, 100vw"
+      alt="Masada ince belli bardaklara demlikten çay dökülüyor" data-parallax />
+  </div>
+  <div class="visit__scrim" aria-hidden="true"></div>
+
+  <div class="wrap visit__grid">
+    <h2 id="visit-title" class="visit__title display" data-split>
+      <span>Orhangazi</span><span class="hot">merkez.</span>
+    </h2>
+    <p class="visit__sub">Bursa · 2008'den beri</p>
+
+    <div class="visit__panel">
+      <dl class="visit__hours">
+        {site.hours.map((h) => (
+          <div class="visit__row"><dt>{h.days}</dt><dd>{h.time}</dd></div>
+        ))}
+      </dl>
+      <div class="visit__actions">
+        <a class="btn" href={site.phone.href}>Hemen ara: {site.phone.display}</a>
+        <div class="visit__links">
+          <a class="link" href={site.mapsHq} rel="noopener">Haritada aç</a>
+          <a class="link" href={site.instagram.href} rel="noopener">Instagram {site.instagram.handle}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .visit { position: relative; isolation: isolate; overflow: hidden; min-height: 100svh; display: flex; align-items: flex-end; color: var(--cream); background: #0b0d12; }
+  .visit__bg { position: absolute; inset: -8% 0; z-index: -2; }
+  .visit__bg :global(picture), .visit__bg :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .visit__scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(10 18 60 / 0.96) 0%, rgb(10 18 60 / 0.86) 55%, rgb(10 18 60 / 0.35) 100%); }
+  .visit__grid { padding-block: var(--s-10) var(--s-8); }
+  .visit__title { font-size: clamp(3.2rem, 9.5vw, 10rem); line-height: 0.9; color: var(--cream); }
+  .visit__title span { display: block; }
+  .visit__title .hot { color: var(--amber); }
+  .visit__sub { font-size: var(--t-h3); font-weight: 700; color: var(--cream); margin-block: var(--s-3) var(--s-8); }
+  .visit__panel { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--s-8); align-items: end; }
+  .visit__row {
+    display: flex; justify-content: space-between; gap: var(--s-5);
+    padding-block: var(--s-4); border-top: 2px solid var(--cream);
+    font-size: var(--t-lead); font-weight: 650;
+  }
+  .visit__row:last-child { border-bottom: 2px solid var(--cream); }
+  .visit__row dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .visit__hours { margin: 0; }
+  .visit__actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-4); }
+  .visit__links { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-6); }
+  .visit__links .link { color: var(--cream); }
+
+  @media (max-width: 899px) {
+    .visit__grid { padding-block: var(--s-9) var(--s-7); }
+    .visit__sub { margin-bottom: var(--s-6); }
+    .visit__panel { grid-template-columns: 1fr; gap: var(--s-6); }
+    .visit__actions .btn { width: 100%; justify-content: center; }
+  }
+</style>

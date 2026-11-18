@@ -1,0 +1,29 @@
+---
+// Phone-only bar: the two things people want from a toast shop on the move.
+import { site } from '../data/site';
+---
+<div class="abar" data-abar>
+  <a class="abar__btn abar__btn--call" href={site.phone.href}>Hemen ara</a>
+  <a class="abar__btn" href={site.mapsHq} rel="noopener">Haritada aç</a>
+</div>
+
+<style>
+  .abar { display: none; }
+  @media (max-width: 899px) {
+    .abar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--blue-deep);
+      padding-bottom: env(safe-area-inset-bottom);
+      transition: transform var(--dur) var(--ease-out);
+    }
+    .abar.is-hidden { transform: translateY(110%); }
+    .abar__btn {
+      display: grid; place-items: center; min-height: 3.5rem;
+      background: var(--blue); color: var(--cream);
+      font-weight: 760; text-decoration: none;
+    }
+    .abar__btn--call { background: var(--amber); color: var(--blue-ink); }
+    .abar__btn:active { filter: brightness(0.92); }
+  }
+</style>

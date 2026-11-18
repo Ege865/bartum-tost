@@ -1,0 +1,41 @@
+---
+import { site, nav } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer ground-blue" aria-labelledby="footer-mark">
+  <div class="wrap">
+    <div class="footer__top">
+      <nav class="footer__nav" aria-label="Alt menü">
+        {nav.map((n) => <a class="link" href={n.href}>{n.label}</a>)}
+      </nav>
+      <a class="link" href={site.instagram.href} rel="noopener">Instagram {site.instagram.handle}</a>
+    </div>
+    <p class="footer__mark display" id="footer-mark" data-press-word>
+      Bartum <span>Tost</span>
+    </p>
+    <p class="footer__legal muted-on-blue">
+      © {year} {site.name} · Orhangazi, Bursa · Fotoğraflar: Bartum Tost ve Unsplash
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer { padding-block: var(--s-8) calc(var(--s-6) + env(safe-area-inset-bottom)); overflow: hidden; }
+  .footer__top {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--s-4);
+    padding-bottom: var(--s-6); border-bottom: 1px solid rgb(244 235 217 / 0.22);
+  }
+  .footer__nav { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-6); }
+  .footer__mark {
+    font-size: clamp(3rem, 13.4vw, 15rem); line-height: 0.9; color: var(--cream);
+    margin-block: var(--s-7) var(--s-6); white-space: nowrap;
+    transform-origin: 50% 100%;
+  }
+  .footer__mark span { color: var(--amber); }
+  .footer__legal { font-size: var(--t-small); }
+
+  @media (max-width: 899px) {
+    .footer { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)); }
+    .footer__mark { font-size: 13vw; }
+  }
+</style>

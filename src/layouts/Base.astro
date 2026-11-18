@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props { title: string; description?: string; }
+const { title, description = site.description } = Astro.props;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: site.name,
+  servesCuisine: 'Tost',
+  telephone: '+905383453399',
+  foundingDate: String(site.founded),
+  address: { '@type': 'PostalAddress', addressLocality: site.hq, addressRegion: site.city, addressCountry: 'TR' },
+  openingHours: 'Mo-Sa 08:00-01:30',
+  sameAs: [site.instagram.href],
+};
+---
+<!doctype html>
+<html lang="tr" data-type="place">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="page-type" content="place" />
+    <meta name="site-kind" content="other" />
+    <meta name="page-kind" content="place" />
+    <meta name="theme-color" content="#1c39bb" />
+    <link rel="canonical" href={site.url + '/'} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`.replace('//', '/')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    <!-- Marks JS as available before first paint, so animated elements can start in their "from" state. -->
+    <script is:inline>document.documentElement.classList.add('js', 'm-enter');</script>
+  </head>
+  <body>
+    <a class="skip" href="#icerik">İçeriğe geç</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,58 @@
+---
+// The founder's story beside two photographs that drift at different speeds.
+import { Picture } from 'astro:assets';
+import usta from '../assets/photos/usta-tezgah.jpg';
+import kasar from '../assets/stock/kasar-uzamasi.jpg';
+---
+<section class="story ground-cream on-cream" id="hikaye" aria-labelledby="story-title">
+  <div class="wrap story__grid">
+    <div class="story__copy">
+      <h2 id="story-title" class="display h2 story__title" data-split>2008'de “belki bir gün” diye başladı.</h2>
+      <p class="story__text" data-highlight>
+        Sedat Candaş, Orhangazi'de bir sacın başında başladı ve tabelasına “2008'de belki bir gün diye yola çıkmıştım” yazdı.
+        O gün geldi: bugün dört adreste aynı sac yanıyor, aynı tost bastırılıyor.
+      </p>
+    </div>
+
+    <div class="story__pics">
+      <div class="frame story__pic story__pic--a" data-reveal-img>
+        <Picture src={kasar} formats={['avif', 'webp']} widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 70vw"
+          alt="İkiye ayrılan sıcak tostun arasından uzayan erimiş kaşar" data-parallax />
+      </div>
+      <div class="frame story__pic story__pic--b" data-reveal-img data-speed="-12">
+        <Picture src={usta} formats={['avif', 'webp']} widths={[420, 640, 810]} sizes="(min-width: 900px) 22vw, 56vw"
+          alt="Sedat Candaş tezgâhta sandviç ekmeklerinin üstüne eritilmiş tereyağı döküyor" data-parallax />
+      </div>
+      <svg class="story__stamp" viewBox="0 0 200 200" aria-hidden="true" data-spin>
+        <circle cx="100" cy="100" r="98" class="disc" /><defs><path id="ring" d="M100 100 m-78 0 a78 78 0 1 1 156 0 a78 78 0 1 1 -156 0" /></defs>
+        <text><textPath href="#ring">ORHANGAZİ · 2008'DEN BERİ · BARTUM TOST · </textPath></text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story { padding-block: var(--s-10); min-height: 100svh; display: flex; align-items: center; overflow: hidden; }
+  .story__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--s-9); align-items: center; }
+  .story__title { color: var(--blue); margin-bottom: var(--s-7); }
+  .story__text { font-size: clamp(1.25rem, 1.9vw, 1.75rem); line-height: 1.38; font-weight: 560; text-wrap: pretty; max-width: 36ch; }
+
+  .story__pics { position: relative; height: min(82svh, 46rem); }
+  .story__pic { position: absolute; }
+  .story__pic--a { right: 0; top: 0; width: 68%; height: 82%; }
+  .story__pic--b { left: 0; bottom: 0; width: 44%; height: 52%; border: 10px solid var(--cream); box-sizing: content-box; }
+  .story__stamp {
+    position: absolute; left: calc(32% - 4.75rem); top: 10%; width: 9.5rem; height: 9.5rem; z-index: 2;
+    fill: var(--blue-ink); font-weight: 800; font-size: 17px; letter-spacing: 0.12em;
+  }
+  .story__stamp .disc { fill: var(--amber); }
+
+  @media (max-width: 899px) {
+    .story { padding-block: var(--s-9); }
+    .story__grid { grid-template-columns: 1fr; gap: var(--s-7); }
+    .story__pics { height: 118vw; }
+    .story__pic--a { width: 78%; height: 78%; }
+    .story__pic--b { width: 50%; height: 46%; border-width: 6px; }
+    .story__stamp { left: auto; right: 4%; top: auto; bottom: 2%; width: 7rem; height: 7rem; }
+  }
+</style>

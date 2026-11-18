@@ -1,0 +1,124 @@
+@import '@fontsource-variable/archivo/standard.css';
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  font-variation-settings: 'wdth' 100;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+button { font: inherit; color: inherit; }
+
+::selection { background: var(--amber); color: var(--blue-ink); }
+html { caret-color: var(--amber); scrollbar-color: var(--blue) var(--cream); }
+
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.on-cream :focus-visible { outline-color: var(--blue); }
+
+.skip {
+  position: fixed; left: var(--s-4); top: var(--s-4); z-index: 200;
+  padding: var(--s-3) var(--s-5);
+  background: var(--amber); color: var(--blue-ink); font-weight: 700; text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Layout */
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+main > section { position: relative; }
+.ground-blue { background: var(--blue); color: var(--cream); }
+.ground-cream { background: var(--cream); color: var(--blue-ink); }
+
+/* Display type: condensed, heavy, tight. Turkish casing comes from lang="tr". */
+.display {
+  font-weight: 860;
+  font-variation-settings: 'wdth' 68;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.h2 { font-size: var(--t-h2); }
+.lead { font-size: var(--t-lead); line-height: 1.45; max-width: 38ch; text-wrap: pretty; }
+.muted-on-blue { color: var(--cream-dim); }
+
+/* Buttons: one style, filled amber; a quiet text link as the second action. */
+.btn {
+  --bg: var(--amber);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: var(--s-3);
+  min-height: 3.25rem; padding: 0 var(--s-6);
+  background: var(--bg); color: var(--blue-ink);
+  font-weight: 760; font-size: 1rem; letter-spacing: 0.01em;
+  text-decoration: none; border: 0; cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.btn::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: var(--cream);
+  transform: translateY(101%);
+  transition: transform var(--dur) var(--ease-out);
+}
+.on-cream .btn::before { background: var(--blue-ink); }
+.on-cream .btn:hover { color: var(--cream); }
+.btn:hover::before { transform: translateY(0); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.97); transition-duration: 80ms; }
+.btn svg { width: 1.1em; height: 1.1em; transition: transform var(--dur) var(--ease-out); }
+.btn:hover svg { transform: translateX(3px); }
+
+.link {
+  position: relative; display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: 2.75rem;
+  font-weight: 650; text-decoration: none;
+}
+.link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0.55rem; height: 2px;
+  background: currentColor; transform: scaleX(0.25); transform-origin: left;
+  transition: transform var(--dur) var(--ease-out);
+}
+.link:hover::after, .link:focus-visible::after { transform: scaleX(1); }
+
+/* Image frames: photos sit square, zoom gently inside their frame on hover. */
+.frame { position: relative; overflow: hidden; background: var(--blue-deep); }
+.frame img { width: 100%; height: 100%; object-fit: cover; }
+/* Parallax pictures are taller than their frame so the drift never shows an edge. */
+.frame img[data-parallax] { position: absolute; left: 0; top: -10%; width: 100%; height: 120%; }
+
+/* Grill marks: the brand's one graphic device, drawn as SVG strokes. */
+.grill { display: block; color: var(--amber); }
+.grill line { stroke: currentColor; stroke-width: 6; stroke-linecap: square; }
+
+/* Hero pieces wait for the entrance; a failsafe shows them if the script never arrives. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js:not(.motion-ready) :is([data-hero-line], [data-hero-fade], [data-hero-frame]) {
+    opacity: 0;
+    animation: bt-show 0s 4.5s forwards;
+  }
+}
+@keyframes bt-show { to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
+}

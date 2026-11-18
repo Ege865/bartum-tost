@@ -1,0 +1,33 @@
+---
+// Scroll-zoom moment: the fire photograph opens from a card in the middle to the full screen,
+// then a single line rises over it.
+import { Picture } from 'astro:assets';
+import alev from '../assets/stock/alev.jpg';
+---
+<section class="fire" aria-labelledby="fire-title" data-fire>
+  <div class="fire__pin" data-fire-pin>
+    <div class="fire__media" data-fire-media>
+      <Picture src={alev} formats={['avif', 'webp']} widths={[768, 1280, 1920, 2400]} sizes="(max-width: 899px) 1600px, 145vw"
+        alt="Sacın üstünde yükselen alevler, yanında pişen köfteler ve eldivenli eller" data-fire-img />
+      <div class="fire__shade" aria-hidden="true"></div>
+    </div>
+    <div class="wrap fire__copy">
+      <h2 id="fire-title" class="display fire__title" data-fire-text>
+        <span>Sac 08:00'de yanar,</span>
+        <span class="hot">01:30'a kadar sönmez.</span>
+      </h2>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fire { background: #07080c; color: var(--cream); }
+  .fire__pin { position: relative; height: 100svh; overflow: hidden; display: flex; align-items: flex-end; }
+  .fire__media { position: absolute; inset: 0; }
+  .fire__media :global(picture), .fire__media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .fire__shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgb(7 8 12 / 0.85), rgb(7 8 12 / 0) 55%); }
+  .fire__copy { position: relative; padding-bottom: var(--s-9); }
+  .fire__title { font-size: var(--t-h2); }
+  .fire__title span { display: block; }
+  .fire__title .hot { color: var(--amber); }
+</style>

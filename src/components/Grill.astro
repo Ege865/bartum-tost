@@ -1,0 +1,10 @@
+---
+// The brand device: the marks a toast press leaves. Lines are drawn in by GSAP (data-grill).
+interface Props { count?: number; class?: string; }
+const { count = 5, class: cls = '' } = Astro.props;
+const lines = Array.from({ length: count }, (_, i) => i);
+const w = count * 28;
+---
+<svg class:list={['grill', cls]} viewBox={`0 0 ${w} 60`} width={w} height="60" aria-hidden="true" focusable="false" data-grill>
+  {lines.map((i) => <line x1={8 + i * 28} y1="54" x2={30 + i * 28} y2="6" pathLength="1" />)}
+</svg>

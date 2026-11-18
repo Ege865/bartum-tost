@@ -1,0 +1,84 @@
+---
+// Full-bleed photographic hero. The picture slowly settles on load and drifts with the scroll;
+// a blue scrim on the reading side keeps the type legible at every width.
+import { Picture } from 'astro:assets';
+import hero from '../assets/stock/hero-izgara.jpg';
+import { site } from '../data/site';
+---
+<section class="hero" id="top" aria-labelledby="hero-title" data-enter data-hero>
+  <div class="hero__bg" data-hero-frame>
+    <Picture
+      src={hero}
+      formats={['avif', 'webp']}
+      widths={[768, 1280, 1920, 2400]}
+      sizes="(max-width: 899px) 1400px, 100vw"
+      alt="Izgara izli, ikiye kesilmiş kaşarlı tost, yanında ketçap ve mayonez"
+      loading="eager"
+      fetchpriority="high"
+      data-hero-img
+    />
+  </div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  <div class="wrap hero__content">
+    <h1 id="hero-title" class="hero__title display">
+      <span class="hero__line" data-hero-line>Sacda bastırılan</span>
+      <span class="hero__line hero__line--hot" data-hero-line>tost.</span>
+    </h1>
+    <div class="hero__foot">
+      <p class="lead hero__lead" data-hero-fade>
+        Orhangazi'de 2008'den beri sucuklu, kaşarlı, pastırmalı tost. Pazar hariç her gün 08:00 – 01:30 açığız.
+      </p>
+      <div class="hero__actions" data-hero-fade>
+        <a class="btn" href={site.mapsHq} rel="noopener">
+          Haritada aç
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="link hero__phone" href={site.phone.href}>{site.phone.display}</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .hero {
+    position: relative; isolation: isolate; overflow: hidden;
+    min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
+    background: #0b0d12; color: var(--cream);
+  }
+  .hero__bg { position: absolute; inset: 0; z-index: -2; }
+  .hero__bg :global(picture), .hero__bg :global(img) { width: 100%; height: 100%; }
+  .hero__bg :global(img) { object-fit: cover; object-position: 68% 50%; transform-origin: 70% 50%; }
+  .hero__scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(90deg, rgb(10 18 60 / 0.92) 0%, rgb(10 18 60 / 0.7) 34%, rgb(10 18 60 / 0.05) 66%),
+      linear-gradient(0deg, rgb(8 10 20 / 0.75) 0%, rgb(8 10 20 / 0) 40%),
+      linear-gradient(180deg, rgb(8 10 30 / 0.7) 0%, rgb(8 10 30 / 0) 22%);
+  }
+  .hero__content { padding-top: calc(var(--nav-h) + var(--s-6)); padding-bottom: var(--s-9); }
+  .hero__title { font-size: var(--t-hero); margin-bottom: var(--s-7); }
+  .hero__line { white-space: nowrap; }
+  .hero__line { display: block; }
+  .hero__line--hot { color: var(--amber); }
+  .hero__foot { display: flex; align-items: end; justify-content: space-between; gap: var(--s-6); flex-wrap: wrap; }
+  .hero__lead { color: var(--cream); max-width: 34ch; }
+  .hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-4) var(--s-6); }
+  .hero__phone { color: var(--cream); font-variant-numeric: tabular-nums; }
+
+
+  @media (max-width: 899px) {
+    .hero__bg :global(img) { object-position: 78% 50%; }
+    .hero__scrim {
+      background:
+        linear-gradient(0deg, rgb(10 18 60 / 0.95) 0%, rgb(10 18 60 / 0.75) 45%, rgb(10 18 60 / 0.15) 80%),
+        linear-gradient(180deg, rgb(8 10 30 / 0.75) 0%, rgb(8 10 30 / 0) 20%);
+    }
+    .hero { --abar: calc(3.5rem + env(safe-area-inset-bottom)); }
+    .hero__content { padding-bottom: calc(var(--abar) + var(--s-6)); }
+    .hero__title { margin-bottom: var(--s-5); }
+    .hero__actions { width: 100%; }
+    .hero__actions .btn { flex: 1 1 100%; justify-content: center; }
+  }
+</style>

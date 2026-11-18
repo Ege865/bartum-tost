@@ -1,0 +1,40 @@
+/* Bartum Tost design tokens.
+   Persian Blue carries the brand blocks, Cream the reading surfaces, Amber only focus points.
+   Contrast (measured): cream on blue 7.4:1, amber on blue 5.3:1, blue on cream 7.4:1,
+   ink on amber 9.6:1. Amber is never text on cream (1.4:1). */
+:root {
+  --blue: #1c39bb;
+  --blue-deep: #142a8c;       /* pressed state, hairlines on blue */
+  --blue-ink: #0d1b5e;        /* text on cream and on amber */
+  --cream: #f4ebd9;
+  --cream-dim: #d9ceb8;       /* secondary text on blue: 5.4:1 */
+  --cream-line: #e3d7bf;
+  --amber: #ffb000;
+  --amber-hot: #ffc233;
+
+  --ground: var(--cream);
+  --ink: var(--blue-ink);
+
+  --font: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+
+  /* Type scale: display lines are set condensed (wdth) and heavy, body stays at normal width. */
+  --t-hero: clamp(3.4rem, 10vw, 10.5rem);
+  --t-h2: clamp(2.6rem, 7vw, 6.5rem);
+  --t-h3: clamp(1.6rem, 3vw, 2.6rem);
+  --t-lead: clamp(1.15rem, 1.6vw, 1.45rem);
+  --t-body: 1.0625rem;
+  --t-small: 0.875rem;
+
+  /* Spacing: 4px base. */
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem; --s-5: 1.5rem;
+  --s-6: 2rem; --s-7: 3rem; --s-8: 4rem; --s-9: 6rem; --s-10: 8rem;
+
+  --gutter: clamp(1rem, 4vw, 4rem);
+  --wrap: 88rem;
+  --nav-h: 4.5rem;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-press: cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-fast: 180ms;
+  --dur: 320ms;
+}

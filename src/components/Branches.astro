@@ -1,0 +1,86 @@
+---
+// Horizontal moment: the four addresses travel past as the section is scrolled (desktop, pinned).
+// On touch screens the same track is a native swipe row with scroll snapping.
+import { branches } from '../data/site';
+import Grill from './Grill.astro';
+import { Picture } from 'astro:assets';
+import bursa from '../assets/stock/bursa-sehir.jpg';
+---
+<section class="branches ground-blue" id="subeler" aria-labelledby="branches-title" data-branches>
+  <div class="branches__pin" data-branches-pin>
+    <div class="branches__bg" aria-hidden="true">
+      <Picture src={bursa} formats={['avif', 'webp']} widths={[768, 1280, 1920, 2400]} sizes="(max-width: 899px) 1400px, 100vw" alt="" data-branches-bg />
+    </div>
+    <div class="wrap branches__head">
+      <h2 id="branches-title" class="display h2 branches__title">Dört şube, aynı sac.</h2>
+      <p class="branches__hint muted-on-blue" aria-hidden="true">Kaydır</p>
+    </div>
+
+    <div class="branches__viewport" data-branches-viewport>
+      <ol class="branches__track" data-branches-track>
+        {branches.map((b) => (
+          <li class="branch">
+            <span class="branch__note">{b.note} · {b.region}</span>
+            <span class="branch__name display">{b.name}</span>
+            <a class="link branch__link" href={b.href} rel="noopener">
+              Haritada aç<span class="sr-only">: {b.name}</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </a>
+          </li>
+        ))}
+        <li class="branch branch--sponsor">
+          <Grill count={3} class="branch__grill" />
+          <span class="branch__note">Sahada da biz</span>
+          <span class="branch__sponsor">Gazi Tuning FC'nin resmi sponsoruyuz. Aynı hedef, aynı tutku, aynı yol.</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .branches { overflow: hidden; }
+  .branches__bg { position: absolute; inset: 0; z-index: -1; background: var(--blue); }
+  .branches__bg :global(picture), .branches__bg :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  /* Bursa under Uludağ, printed in the brand blue */
+  .branches__bg :global(img) { mix-blend-mode: multiply; filter: grayscale(1) contrast(1.15) brightness(1.05); opacity: 0.85; }
+  .branches__pin {
+    position: relative; isolation: isolate; overflow: hidden;
+    min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+    padding-block: calc(var(--nav-h) + var(--s-6)) var(--s-8);
+  }
+  .branches__head { display: flex; justify-content: space-between; align-items: end; gap: var(--s-6); margin-bottom: var(--s-8); }
+  .branches__title { color: var(--cream); max-width: 12ch; }
+  .branches__hint { font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: var(--t-small); }
+
+  .branches__viewport { padding-inline: max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter))); }
+  .branches__track { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--s-9); width: max-content; }
+  .branch {
+    display: flex; flex-direction: column; gap: var(--s-3);
+    flex: none; padding-top: var(--s-5); border-top: 2px solid var(--cream);
+  }
+  .branch__note { font-weight: 700; font-size: var(--t-small); letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+  .branch__name { font-size: clamp(4rem, 11vw, 10.5rem); color: var(--cream); white-space: nowrap; font-variation-settings: 'wdth' 100; }
+  .branch__link { color: var(--cream); align-self: start; }
+  .branch--sponsor { border-top-color: var(--amber); width: min(30rem, 80vw); }
+  .branch__grill { width: 4.5rem; height: auto; margin-bottom: var(--s-3); }
+  .branch__sponsor { font-size: var(--t-h3); line-height: 1.1; font-weight: 700; color: var(--cream); max-width: 18ch; text-wrap: balance; }
+
+  /* Touch / narrow: native horizontal swipe instead of the pinned scrub. */
+  @media (max-width: 899px), (hover: none) {
+    .branches__pin { min-height: 100svh; padding-block: var(--s-9); }
+    .branches__head { margin-bottom: var(--s-6); }
+    .branches__viewport {
+      overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+      scrollbar-width: none; padding-bottom: var(--s-4);
+      scroll-padding-inline: var(--gutter);
+    }
+    .branches__viewport::-webkit-scrollbar { display: none; }
+    .branches__track { gap: var(--s-6); }
+    .branch { scroll-snap-align: start; }
+    .branch__name { font-size: clamp(3rem, 13vw, 5.5rem); }
+  }
+  @media (min-width: 900px) and (hover: hover) {
+    .branches__hint { display: none; }
+  }
+</style>
